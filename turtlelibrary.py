@@ -1,6 +1,29 @@
 import turtle
 import random
 
+x = input ("Enter x coordinate: ")
+y = input ("Enter y coordinate: ")
+width = input ("Enter width of the bookshelf: ")
+heigth = input ("Enter height of the bookshelf: ")
+
+def draw_bookshelf(x,y,width, heigth): 
+    screen = turtle.Screen()
+    turtle.speed(0)
+    turtle.color("brown")
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+    for _ in range(2):
+        turtle.forward(width)
+        turtle.left(90)
+        turtle.forward(heigth)
+        turtle.left(90)
+    turtle.penup()
+    turtle.hideturtle()
+    turtle.done()
+
+draw_bookshelf(float(x), float(y), float(width), float(heigth))
+
 def setup_screen():
     """Setup the turtle screen with proper configuration."""
     screen = turtle.Screen()
