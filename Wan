@@ -1,0 +1,270 @@
+import turtle
+import random
+
+def setup_screen():
+    """Setup the turtle screen with proper configuration."""
+    screen = turtle.Screen()
+    screen.title("Turtle Library Scene")
+    screen.bgcolor("lightblue")
+    screen.setup(800, 600)
+    screen.tracer(0)  # Turn off animation for faster drawing
+    return screen
+
+def draw_bookshelf(x, y, width, height):
+    """
+    Draws a bookshelf at the given coordinates.
+    
+    Args:
+        x, y: bottom-left corner of the bookshelf
+        width, height: dimensions of the bookshelf
+    """
+    t = turtle.Turtle()
+    t.hideturtle()
+    t.speed(0)
+    t.penup()
+    
+    # Draw the main frame
+    t.goto(x, y)
+    t.pendown()
+    t.color("brown")
+    t.fillcolor("saddlebrown")
+    t.begin_fill()
+    for _ in range(2):
+        t.forward(width)
+        t.left(90)
+        t.forward(height)
+        t.left(90)
+    t.end_fill()
+    
+    # Draw horizontal shelves (3 internal shelves)
+    shelf_height = height / 4
+    for i in range(1, 4):
+        shelf_y = y + (i * shelf_height)
+        t.penup()
+        t.goto(x, shelf_y)
+        t.pendown()
+        t.color("darkbrown")
+        t.pensize(3)
+        t.forward(width)
+        t.pensize(1)
+    
+    # Draw vertical dividers (optional)
+    divider_width = width / 3
+    for i in range(1, 3):
+        divider_x = x + (i * divider_width)
+        t.penup()
+        t.goto(divider_x, y)
+        t.pendown()
+        t.color("darkbrown")
+        t.pensize(2)
+        t.setheading(90)
+        t.forward(height)
+        t.pensize(1)
+
+def draw_book(x, y, width, height, color):
+    """
+    Draws a single upright book.
+    
+    Args:
+        x, y: bottom-left of the book
+        width, height: size of the book
+        color: fill color of the book
+    """
+    t = turtle.Turtle()
+    t.hideturtle()
+    t.speed(0)
+    t.penup()
+    
+    # Draw the book
+    t.goto(x, y)
+    t.pendown()
+    t.color("black")
+    t.fillcolor(color)
+    t.begin_fill()
+    for _ in range(2):
+        t.forward(width)
+        t.left(90)
+        t.forward(height)
+        t.left(90)
+    t.end_fill()
+    
+    # Draw book spine details
+    t.penup()
+    t.goto(x + width/2, y + height/2)
+    t.pendown()
+    t.color("white")
+    t.pensize(1)
+    t.setheading(90)
+    t.forward(height/3)
+    t.backward(height/3)
+    t.setheading(0)
+    t.forward(width/4)
+    t.backward(width/2)
+
+def draw_table(x, y):
+    """
+    Draws a simple table (rectangle with 4 legs).
+    
+    Args:
+        x, y: center of the table top
+    """
+    t = turtle.Turtle()
+    t.hideturtle()
+    t.speed(0)
+    t.penup()
+    
+    # Table dimensions
+    table_width = 100
+    table_height = 50
+    leg_height = 40
+    leg_width = 5
+    
+    # Draw table top
+    t.goto(x - table_width/2, y - table_height/2)
+    t.pendown()
+    t.color("black")
+    t.fillcolor("tan")
+    t.begin_fill()
+    for _ in range(2):
+        t.forward(table_width)
+        t.left(90)
+        t.forward(table_height)
+        t.left(90)
+    t.end_fill()
+    
+    # Draw table legs
+    leg_positions = [
+        (x - table_width/2 + leg_width/2, y - table_height/2),
+        (x + table_width/2 - leg_width/2, y - table_height/2),
+        (x - table_width/2 + leg_width/2, y + table_height/2),
+        (x + table_width/2 - leg_width/2, y + table_height/2)
+    ]
+    
+    for leg_x, leg_y in leg_positions:
+        t.penup()
+        t.goto(leg_x, leg_y)
+        t.pendown()
+        t.color("black")
+        t.fillcolor("brown")
+        t.begin_fill()
+        for _ in range(2):
+            t.forward(leg_width)
+            t.left(90)
+            t.forward(leg_height)
+            t.left(90)
+        t.end_fill()
+
+def draw_lamp(x, y):
+    """
+    Draws a small reading lamp with a base, stem, and light shade.
+    
+    Args:
+        x, y: base center
+    """
+    t = turtle.Turtle()
+    t.hideturtle()
+    t.speed(0)
+    t.penup()
+    
+    # Draw lamp base
+    t.goto(x, y)
+    t.pendown()
+    t.color("black")
+    t.fillcolor("darkgray")
+    t.begin_fill()
+    t.circle(15)
+    t.end_fill()
+    
+    # Draw lamp stem
+    t.penup()
+    t.goto(x, y + 15)
+    t.pendown()
+    t.color("black")
+    t.pensize(3)
+    t.setheading(90)
+    t.forward(40)
+    t.pensize(1)
+    
+    # Draw lamp shade (triangle)
+    shade_x = x
+    shade_y = y + 55
+    t.penup()
+    t.goto(shade_x - 20, shade_y)
+    t.pendown()
+    t.color("black")
+    t.fillcolor("beige")
+    t.begin_fill()
+    t.goto(shade_x + 20, shade_y)
+    t.goto(shade_x, shade_y + 25)
+    t.goto(shade_x - 20, shade_y)
+    t.end_fill()
+    
+    # Draw light bulb (small circle)
+    t.penup()
+    t.goto(shade_x, shade_y + 5)
+    t.pendown()
+    t.color("black")
+    t.fillcolor("yellow")
+    t.begin_fill()
+    t.circle(3)
+    t.end_fill()
+
+def draw_scene():
+    """
+    Combines all the above elements into a full library scene.
+    """
+    # Setup screen
+    screen = setup_screen()
+    
+    # Draw bookshelf
+    draw_bookshelf(-200, -150, 120, 200)
+    
+    # Draw books on the shelves using loops
+    book_colors = ["red", "blue", "green", "purple", "orange", "pink", "cyan", "magenta", "yellow", "brown"]
+    
+    # First shelf books
+    for i in range(3):
+        x = -200 + (i * 35) + 5
+        y = -150 + 50
+        color = random.choice(book_colors)
+        draw_book(x, y, 30, 40, color)
+    
+    # Second shelf books
+    for i in range(3):
+        x = -200 + (i * 35) + 5
+        y = -150 + 100
+        color = random.choice(book_colors)
+        draw_book(x, y, 30, 40, color)
+    
+    # Third shelf books
+    for i in range(3):
+        x = -200 + (i * 35) + 5
+        y = -150 + 150
+        color = random.choice(book_colors)
+        draw_book(x, y, 30, 40, color)
+    
+    # Draw table
+    draw_table(0, -100)
+    
+    # Draw lamp on table
+    draw_lamp(0, -60)
+    
+    # Draw additional bookshelf on the right
+    draw_bookshelf(100, -150, 120, 200)
+    
+    # Draw books on the right bookshelf
+    for i in range(3):
+        for j in range(3):
+            x = 100 + (i * 35) + 5
+            y = -150 + (j * 50) + 50
+            color = random.choice(book_colors)
+            draw_book(x, y, 30, 40, color)
+    
+    # Update screen
+    screen.update()
+    
+    # Keep the window open
+    screen.mainloop()
+
+if __name__ == "__main__":
+    draw_scene() 
