@@ -266,5 +266,4 @@ def draw_scene():
     # Keep the window open
     screen.mainloop()
 
-if __name__ == "__main__":
-    draw_scene() 
+draw_scene() 
